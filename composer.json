@@ -1,0 +1,13 @@
+{
+    "name": "jerick.duguran/drupal-pathperdomain",
+    "description": "Drupal 8 Port of Domain Path",
+    "type": "drupal-custom-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jerick Y . Duguran",
+            "email": "jerick.duguran@gmail.com"
+        }
+    ],
+    "require": {}
+}
