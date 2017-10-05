@@ -1,5 +1,5 @@
 {
-    "name": "jerick.duguran/drupal-pathperdomain",
+    "name": "jerickduguran/drupal-pathperdomain",
     "description": "Drupal 8 Port of Domain Path",
     "type": "drupal-custom-module",
     "license": "MIT",
