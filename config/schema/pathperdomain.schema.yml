@@ -1,4 +1,4 @@
-domain_path.settings:
+pathperdomain.settings:
   type: config_object
   mapping:
     entity_types:
@@ -7,7 +7,7 @@ domain_path.settings:
       sequence:
         type: string
 
-pathauto.pattern.*.third_party.domain_path:
+pathauto.pattern.*.third_party.pathperdomain:
   type: mapping
   label: 'Domains pathauto settings'
   mapping:

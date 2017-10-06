@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
-class DomainPathHelper {
+class PathPerDomainHelper {
 
   /**
    * Helper function for retrieving configured entity types.
@@ -10,7 +10,7 @@ class DomainPathHelper {
    * @return array|mixed|null
    */
   public function getConfiguredEntityTypes() {
-    $config = \Drupal::config('domain_path.settings');
+    $config = \Drupal::config('pathperdomain.settings');
     $enabled_entity_types = $config->get('entity_types');
     $enabled_entity_types = array_filter($enabled_entity_types);
 

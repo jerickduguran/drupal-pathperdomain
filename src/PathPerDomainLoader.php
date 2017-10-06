@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 /**
  * Loads Domain path records.
  */
-class DomainPathLoader implements DomainPathLoaderInterface {
+class PathPerDomainLoader implements PathPerDomainLoaderInterface {
 
   /**
    * {@inheritdoc}
@@ -46,7 +46,7 @@ class DomainPathLoader implements DomainPathLoaderInterface {
    * method at least keeps our code easier to update.
    */
   public function getStorage() {
-    $storage = \Drupal::entityTypeManager()->getStorage('domain_path');
+    $storage = \Drupal::entityTypeManager()->getStorage('pathperdomain');
     return $storage;
   }
 

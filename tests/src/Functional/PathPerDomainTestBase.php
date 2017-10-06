@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\Tests\domain_path\Functional;
+namespace Drupal\Tests\pathperdomain\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Component\Render\FormattableMarkup;
 
-abstract class DomainPathTestBase extends BrowserTestBase {
+abstract class PathPerDomainTestBase extends BrowserTestBase {
   /**
    * @var
    */
@@ -34,7 +34,7 @@ abstract class DomainPathTestBase extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['domain_path', 'field', 'node', 'user', 'path', 'system', 'domain_access', 'pathauto'];
+  public static $modules = ['pathperdomain', 'field', 'node', 'user', 'path', 'system', 'domain_access', 'pathauto'];
 
   /**
    * We use the standard profile for testing.
@@ -66,8 +66,8 @@ abstract class DomainPathTestBase extends BrowserTestBase {
    * Reusable test function for checking initial / empty table status.
    */
   public function domainPathTableIsEmpty() {
-    $domain_paths = \Drupal::service('domain_path.loader')->loadMultiple(NULL, TRUE);
-    $this->assertTrue(empty($domain_paths), 'No domain paths have been created.');
+    $pathperdomains = \Drupal::service('pathperdomain.loader')->loadMultiple(NULL, TRUE);
+    $this->assertTrue(empty($pathperdomains), 'No domain paths have been created.');
   }
 
   /**
@@ -101,10 +101,10 @@ abstract class DomainPathTestBase extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(200);
 
     // check Node entity type
-    $this->config('domain_path.settings')
+    $this->config('pathperdomain.settings')
       ->set('entity_types', $entity_alias)->save();
 
-    $this->drupalGet('admin/config/domain_path/domain_path_settings');
+    $this->drupalGet('admin/config/pathperdomain/pathperdomain_settings');
     $this->assertSession()->statusCodeEquals(200);
   }
 
