@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\domain_path\Controller;
+namespace Drupal\pathperdomain\Controller;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -10,11 +10,11 @@ use Drupal\Core\Routing\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a list controller for domain_path entity.
+ * Provides a list controller for pathperdomain entity.
  *
- * @ingroup domain_path
+ * @ingroup pathperdomain
  */
-class DomainPathListBuilder extends EntityListBuilder {
+class PathPerDomainListBuilder extends EntityListBuilder {
 
   /**
    * The url generator.
@@ -36,10 +36,10 @@ class DomainPathListBuilder extends EntityListBuilder {
   }
 
   /**
-   * Constructs a new DomainPathListBuilder object.
+   * Constructs a new PathPerDomainListBuilder object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
-   *   The entity type domain_path.
+   *   The entity type pathperdomain.
    * @param \Drupal\Core\Entity\EntityStorageInterface $storage
    *   The entity storage class.
    * @param \Drupal\Core\Routing\UrlGeneratorInterface $url_generator
@@ -86,7 +86,7 @@ class DomainPathListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var $entity \Drupal\domain_path\Entity\DomainPath */
+    /* @var $entity \Drupal\pathperdomain\Entity\PathPerDomain */
     $row['id'] = $entity->id();
     $row['domain_id'] = $entity->get('domain_id')->target_id;
     $row['alias'] = $entity->get('alias')->value;

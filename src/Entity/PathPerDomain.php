@@ -1,39 +1,39 @@
 <?php
 /**
  * @file
- * Contains \Drupal\domain_path\Entity\DomainPath.
+ * Contains \Drupal\pathperdomain\Entity\PathPerDomain.
  */
 
-namespace Drupal\domain_path\Entity;
+namespace Drupal\pathperdomain\Entity;
 
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\domain_path\DomainPathInterface;
+use Drupal\pathperdomain\PathPerDomainInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Url;
 
 /**
- * Defines the DomainPath entity.
+ * Defines the PathPerDomain entity.
  *
- * @ingroup domain_path
+ * @ingroup pathperdomain
  *
  *
  * @ContentEntityType(
- *   id = "domain_path",
+ *   id = "pathperdomain",
  *   label = @Translation("Domain path entity"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\domain_path\Controller\DomainPathListBuilder",
+ *     "list_builder" = "Drupal\pathperdomain\Controller\PathPerDomainListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
- *       "add" = "Drupal\domain_path\Form\DomainPathForm",
- *       "edit" = "Drupal\domain_path\Form\DomainPathForm",
- *       "delete" = "Drupal\domain_path\Form\DomainPathDeleteForm",
+ *       "add" = "Drupal\pathperdomain\Form\PathPerDomainForm",
+ *       "edit" = "Drupal\pathperdomain\Form\PathPerDomainForm",
+ *       "delete" = "Drupal\pathperdomain\Form\PathPerDomainDeleteForm",
  *     },
- *     "access" = "Drupal\domain_path\DomainPathAccessControlHandler",
+ *     "access" = "Drupal\pathperdomain\PathPerDomainAccessControlHandler",
  *   },
- *   base_table = "domain_path",
+ *   base_table = "pathperdomain",
  *   admin_permission = "administer domain path entity",
  *   fieldable = FALSE,
  *   entity_keys = {
@@ -46,14 +46,14 @@ use Drupal\Core\Url;
  *     "entity_id" = "entity_id"
  *   },
  *   links = {
- *     "canonical" = "/domain_path/{domain_path}",
- *     "edit-form" = "/admin/config/domain_path/{domain_path}/edit",
- *     "delete-form" = "/admin/config/domain_path/{domain_path}/delete",
- *     "collection" = "/admin/config/domain_path"
+ *     "canonical" = "/pathperdomain/{pathperdomain}",
+ *     "edit-form" = "/admin/config/pathperdomain/{pathperdomain}/edit",
+ *     "delete-form" = "/admin/config/pathperdomain/{pathperdomain}/delete",
+ *     "collection" = "/admin/config/pathperdomain"
  *   }
  * )
  */
-class DomainPath extends ContentEntityBase  implements DomainPathInterface {
+class PathPerDomain extends ContentEntityBase  implements PathPerDomainInterface {
 
   /**
    * {@inheritdoc}
@@ -187,7 +187,7 @@ class DomainPath extends ContentEntityBase  implements DomainPathInterface {
     $entity_id = $this->get('entity_id')->get(0)->getValue()['target_id'];
 
     /*if (!$this->domain_id->entity->isDefault()) {
-      $url = Url::fromRoute('domain_path.view', [
+      $url = Url::fromRoute('pathperdomain.view', [
         'domain' => $domain_id,
         'entity_type' => $entity_type,
         'node' => $nid
@@ -197,7 +197,7 @@ class DomainPath extends ContentEntityBase  implements DomainPathInterface {
       $url = $this->entity_id->entity->toUrl();
     }*/
 
-    $url = Url::fromRoute("domain_path.view.$entity_type", [
+    $url = Url::fromRoute("pathperdomain.view.$entity_type", [
       'domain' => $domain_id,
       $entity_type => $entity_id
     ]);
@@ -206,16 +206,16 @@ class DomainPath extends ContentEntityBase  implements DomainPathInterface {
   }
 
   /**
-   * Get system path for domain_path source
+   * Get system path for pathperdomain source
    *
    * @return string
    */
   public function getSource() {
-    return '/domain_path/' . $this->get('domain_id')->target_id . '/' . $this->get('entity_type')->value . '/' . $this->get('entity_id')->target_id;
+    return '/pathperdomain/' . $this->get('domain_id')->target_id . '/' . $this->get('entity_type')->value . '/' . $this->get('entity_id')->target_id;
   }
 
   /**
-   * Get system path for domain_path source
+   * Get system path for pathperdomain source
    *
    * @return string
    */

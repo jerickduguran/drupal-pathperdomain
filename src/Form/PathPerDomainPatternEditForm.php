@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\domain_path\Form;
+namespace Drupal\pathperdomain\Form;
 
 use Drupal\pathauto\Entity\PathautoPattern;
 use Drupal\pathauto\Form\PatternEditForm;
@@ -15,9 +15,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Edit form for pathauto patterns.
  */
-class DomainPathPatternEditForm extends PatternEditForm {
+class PathPerDomainPatternEditForm extends PatternEditForm {
 
-  protected $domain_path_property = 'domains';
+  protected $pathperdomain_property = 'domains';
 
   /**
    * @var \Drupal\domain\DomainLoaderInterface
@@ -65,7 +65,7 @@ class DomainPathPatternEditForm extends PatternEditForm {
 
       // Expose domain conditions.
       if ($alias_type->getDerivativeId() && $entity_type = $this->entityTypeManager->getDefinition($alias_type->getDerivativeId())) {
-        $default_domains = $this->entity->getThirdPartySetting('domain_path', $this->domain_path_property);
+        $default_domains = $this->entity->getThirdPartySetting('pathperdomain', $this->pathperdomain_property);
 
         if ($domains = $this->domainLoaderManager->loadMultipleSorted()) {
           $domain_options = [];
@@ -93,18 +93,18 @@ class DomainPathPatternEditForm extends PatternEditForm {
                                  &$form,
                                  \Drupal\Core\Form\FormStateInterface $form_state) {
     //If our property can be found from form_state values
-    if ($form_state->getValue($this->domain_path_property)) {
+    if ($form_state->getValue($this->pathperdomain_property)) {
       //We can update the linked property on thirdPartySetting
       $pattern->setThirdPartySetting(
-        'domain_path',
-        $this->domain_path_property,
-        $form_state->getValue($this->domain_path_property)
+        'pathperdomain',
+        $this->pathperdomain_property,
+        $form_state->getValue($this->pathperdomain_property)
       );
     }
     else {
       //User surely wanted to remove the previous value,
       //so remove it from thirdPartySetting property too
-      $pattern->unsetThirdPartySetting('domain_path', $this->domain_path_property);
+      $pattern->unsetThirdPartySetting('pathperdomain', $this->pathperdomain_property);
     }
   }
 

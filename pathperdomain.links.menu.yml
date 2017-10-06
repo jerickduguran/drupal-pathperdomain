@@ -1,18 +1,18 @@
-entity.domain_path.admin:
+entity.pathperdomain.admin:
   title: Domain Path
-  route_name: entity.domain_path.collection
+  route_name: entity.pathperdomain.collection
   parent: system.admin_config
   description: 'Domain Path configuration'
   weight: 0
-entity.domain_path.collection:
+entity.pathperdomain.collection:
   title: 'Domain Path: Domain Paths Listing'
-  route_name: entity.domain_path.collection
-  parent: entity.domain_path.admin
+  route_name: entity.pathperdomain.collection
+  parent: entity.pathperdomain.admin
   description: 'List Domain Paths'
   weight: -10
-domain_path.admin.settings:
+pathperdomain.admin.settings:
   title: Domain Path Settings
-  route_name:  entity.domain_path_settings
-  parent: entity.domain_path.admin
+  route_name:  entity.pathperdomain_settings
+  parent: entity.pathperdomain.admin
   description: 'Configure Domain Path entity'
   weight: 0

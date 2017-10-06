@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 
 /**
  * Provides an interface defining a domain path entity.
  */
-interface DomainPathInterface extends ContentEntityInterface {
+interface PathPerDomainInterface extends ContentEntityInterface {
 
 }

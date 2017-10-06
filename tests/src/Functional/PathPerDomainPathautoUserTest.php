@@ -1,17 +1,17 @@
 <?php
 
-namespace Drupal\Tests\domain_path\Functional;
+namespace Drupal\Tests\pathperdomain\Functional;
 
-use Drupal\Tests\domain_path\DomainPathTestHelperTrait;
+use Drupal\Tests\pathperdomain\PathPerDomainTestHelperTrait;
 
 /**
  * Tests the domain path with pathauto patterns for User entity.
  *
- * @group domain_path
+ * @group pathperdomain
  */
-class DomainPathPathautoUserTest extends DomainPathTestBase {
+class PathPerDomainPathautoUserTest extends PathPerDomainTestBase {
 
-  use DomainPathTestHelperTrait;
+  use PathPerDomainTestHelperTrait;
 
   /**
    * {@inheritdoc}
@@ -23,7 +23,7 @@ class DomainPathPathautoUserTest extends DomainPathTestBase {
   /**
    * Test for pathauto pattern generation for each domain
    */
-  public function testDomainPathPathautoUser() {
+  public function testPathPerDomainPathautoUser() {
     // create default pattern
     $pattern = $this->createPattern('user', '/pathauto/[user:uid]', -1);
     $pattern->save();
@@ -34,7 +34,7 @@ class DomainPathPathautoUserTest extends DomainPathTestBase {
 
       // add domains settings
       $pattern->setThirdPartySetting(
-        'domain_path',
+        'pathperdomain',
         'domains',
         [$domain->id() => $domain->id()]
       );

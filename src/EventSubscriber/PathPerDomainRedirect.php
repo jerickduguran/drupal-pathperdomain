@@ -2,10 +2,10 @@
 
 /**
 * @file
-* Contains \Drupal\domain_path\EventSubscriber\DomainPathRedirectNode
+* Contains \Drupal\pathperdomain\EventSubscriber\PathPerDomainRedirectNode
 */
 
-namespace Drupal\domain_path\EventSubscriber;
+namespace Drupal\pathperdomain\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\redirect\RedirectChecker;
@@ -16,15 +16,15 @@ use Drupal\Core\Path\AliasManager;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
-//use Drupal\domain_path\Exception\DomainPathRedirectLoopException;
-use Drupal\domain_path\DomainPathRepository;
+//use Drupal\pathperdomain\Exception\PathPerDomainRedirectLoopException;
+use Drupal\pathperdomain\PathPerDomainRepository;
 
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Drupal\domain\DomainNegotiatorInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 
-class DomainPathRedirect implements EventSubscriberInterface {
+class PathPerDomainRedirect implements EventSubscriberInterface {
 
 
   protected $domain_negotiator;
@@ -94,7 +94,7 @@ class DomainPathRedirect implements EventSubscriberInterface {
    * @param \Symfony\Component\Routing\RequestContext
    *   Request context.
    */
-  public function __construct(DomainNegotiatorInterface $domain_negotiator, DomainPathRepository $repository, LanguageManagerInterface $language_manager, ConfigFactoryInterface $config, AliasManager $alias_manager, ModuleHandlerInterface $module_handler, EntityManagerInterface $entity_manager, RedirectChecker $checker, RequestContext $context, InboundPathProcessorInterface $path_processor) {
+  public function __construct(DomainNegotiatorInterface $domain_negotiator, PathPerDomainRepository $repository, LanguageManagerInterface $language_manager, ConfigFactoryInterface $config, AliasManager $alias_manager, ModuleHandlerInterface $module_handler, EntityManagerInterface $entity_manager, RedirectChecker $checker, RequestContext $context, InboundPathProcessorInterface $path_processor) {
     $this->domain_negotiator = $domain_negotiator;
     $this->redirectRepository = $repository;
     $this->languageManager = $language_manager;
@@ -132,8 +132,8 @@ class DomainPathRedirect implements EventSubscriberInterface {
       return;
     }
 
-    $domain_path_helper = \Drupal::service('domain_path.helper');
-    $entity_canonical = $domain_path_helper->getConfiguredEntityCanonical();
+    $pathperdomain_helper = \Drupal::service('pathperdomain.helper');
+    $entity_canonical = $pathperdomain_helper->getConfiguredEntityCanonical();
     $route_current = $request->attributes->get('_route');
     // todo: add term/user routes
     // This is necessary because this also gets called on

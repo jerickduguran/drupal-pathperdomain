@@ -1,17 +1,17 @@
 <?php
 
-namespace Drupal\Tests\domain_path\Functional;
+namespace Drupal\Tests\pathperdomain\Functional;
 
-use Drupal\Tests\domain_path\DomainPathTestHelperTrait;
+use Drupal\Tests\pathperdomain\PathPerDomainTestHelperTrait;
 
 /**
  * Tests the domain path with pathauto patterns for Node entity.
  *
- * @group domain_path
+ * @group pathperdomain
  */
-class DomainPathPathautoNodeTest extends DomainPathTestBase {
+class PathPerDomainPathautoNodeTest extends PathPerDomainTestBase {
 
-  use DomainPathTestHelperTrait;
+  use PathPerDomainTestHelperTrait;
 
   /**
    * {@inheritdoc}
@@ -23,7 +23,7 @@ class DomainPathPathautoNodeTest extends DomainPathTestBase {
   /**
    * Test for pathauto pattern generation for each domain
    */
-  public function testDomainPathPathautoNode() {
+  public function testPathPerDomainPathautoNode() {
     // create default pattern
     $pattern = $this->createPattern('node', '/pathauto/[node:nid]', -1);
     $this->addBundleCondition($pattern, 'node', 'page');
@@ -36,7 +36,7 @@ class DomainPathPathautoNodeTest extends DomainPathTestBase {
 
       // add domains settings
       $pattern->setThirdPartySetting(
-        'domain_path',
+        'pathperdomain',
         'domains',
         [$domain->id() => $domain->id()]
       );

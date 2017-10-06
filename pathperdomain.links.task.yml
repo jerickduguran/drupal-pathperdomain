@@ -1,11 +1,11 @@
-domain_path.admin:
+pathperdomain.admin:
   title: Domain Path List
-  route_name: entity.domain_path.collection
-  base_route: entity.domain_path.collection
-domain_path.settings_tab:
+  route_name: entity.pathperdomain.collection
+  base_route: entity.pathperdomain.collection
+pathperdomain.settings_tab:
   title: Domain Path Settings
-  route_name: entity.domain_path_settings
-  base_route: entity.domain_path.collection
-domain_path.local_tasks:
-  deriver: 'Drupal\domain_path\Plugin\Derivative\DomainPathLocalTasks'
+  route_name: entity.pathperdomain_settings
+  base_route: entity.pathperdomain.collection
+pathperdomain.local_tasks:
+  deriver: 'Drupal\pathperdomain\Plugin\Derivative\PathPerDomainLocalTasks'
   weight: -100

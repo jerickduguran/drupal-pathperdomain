@@ -1,23 +1,23 @@
 <?php
 
-namespace Drupal\domain_path\Form;
+namespace Drupal\pathperdomain\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Form controller for the domain_path entity edit forms.
+ * Form controller for the pathperdomain entity edit forms.
  *
- * @ingroup domain_path
+ * @ingroup pathperdomain
  */
-class DomainPathForm extends ContentEntityForm {
+class PathPerDomainForm extends ContentEntityForm {
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var $entity \Drupal\domain_path\Entity\DomainPath */
+    /* @var $entity \Drupal\pathperdomain\Entity\PathPerDomain */
     $form = parent::buildForm($form, $form_state);
     $options = [];
     $langcode = Language::LANGCODE_NOT_SPECIFIED;
@@ -49,8 +49,8 @@ class DomainPathForm extends ContentEntityForm {
     ];
 
     $entity_type_options = [];
-    $domain_path_helper = \Drupal::service('domain_path.helper');
-    $enabled_entity_types = $domain_path_helper->getConfiguredEntityTypes();
+    $pathperdomain_helper = \Drupal::service('pathperdomain.helper');
+    $enabled_entity_types = $pathperdomain_helper->getConfiguredEntityTypes();
     if ($enabled_entity_types) {
       $default_target_entity_type = !empty($default_target_entity_type) ? $default_target_entity_type : reset($enabled_entity_types);
       $entity_types_info = $this->entityTypeManager->getDefinitions();
@@ -123,21 +123,21 @@ class DomainPathForm extends ContentEntityForm {
     $entity_id = isset($entity_id_value[0]['target_id']) ? $entity_id_value[0]['target_id'] : NULL;
     $alias_value = $form_state->getValue('alias');
     $alias = isset($alias_value[0]['value']) ? $alias_value[0]['value'] : NULL;
-    $domain_path_loader = \Drupal::service('domain_path.loader');
+    $pathperdomain_loader = \Drupal::service('pathperdomain.loader');
 
     $alias_check = rtrim(trim($alias), " \\/");
     if ($alias_check && $alias_check[0] !== '/') {
       $form_state->setErrorByName('alias', $this->t('Domain path "%alias" needs to start with a slash.', ['%alias' => $alias_check]));
     }
 
-    if ($domain_path_entity_data = $domain_path_loader->loadByProperties(['alias' => $alias])) {
-      foreach ($domain_path_entity_data as $domain_path_entity) {
-        $check_entity_id = $domain_path_entity->get('entity_id')->target_id;
-        $check_domain_id = $domain_path_entity->get('domain_id')->target_id;
+    if ($pathperdomain_entity_data = $pathperdomain_loader->loadByProperties(['alias' => $alias])) {
+      foreach ($pathperdomain_entity_data as $pathperdomain_entity) {
+        $check_entity_id = $pathperdomain_entity->get('entity_id')->target_id;
+        $check_domain_id = $pathperdomain_entity->get('domain_id')->target_id;
         if ($check_entity_id != $entity_id
           && $check_domain_id == $domain_id) {
-          $domain_path = $domains[$domain_id]->getPath();
-          $form_state->setErrorByName('alias', $this->t('Domain path %path matches an existing domain path alias for %domain_path.', ['%path' => $alias, '%domain_path' => $domain_path]));
+          $pathperdomain = $domains[$domain_id]->getPath();
+          $form_state->setErrorByName('alias', $this->t('Domain path %path matches an existing domain path alias for %pathperdomain.', ['%path' => $alias, '%pathperdomain' => $pathperdomain]));
         }
       }
     }

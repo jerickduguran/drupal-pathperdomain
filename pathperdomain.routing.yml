@@ -1,57 +1,57 @@
-entity.domain_path.canonical:
-  path: '/domain_path/{domain_path}'
+entity.pathperdomain.canonical:
+  path: '/pathperdomain/{pathperdomain}'
   defaults:
-    _controller: '\Drupal\domain_path\Controller\DomainPathViewController::view'
+    _controller: '\Drupal\pathperdomain\Controller\PathPerDomainViewController::view'
     _title: 'Domain path Content'
   requirements:
-    _entity_access: 'domain_path.view'
+    _entity_access: 'pathperdomain.view'
 
-entity.domain_path.collection:
-  path: '/admin/config/domain_path'
+entity.pathperdomain.collection:
+  path: '/admin/config/pathperdomain'
   defaults:
-    _entity_list: 'domain_path'
+    _entity_list: 'pathperdomain'
     _title: 'Domain path List'
     _title_context: 'With modules'
   requirements:
-    _custom_access: '\Drupal\domain_path\Access\DomainPathListCheck::viewDomainPathList'
+    _custom_access: '\Drupal\pathperdomain\Access\PathPerDomainListCheck::viewPathPerDomainList'
 
-entity.domain_path_add:
-  path: '/admin/config/domain_path/add'
+entity.pathperdomain_add:
+  path: '/admin/config/pathperdomain/add'
   defaults:
-    _entity_form: domain_path.add
+    _entity_form: pathperdomain.add
     _title: 'Add Domain path'
   requirements:
-    _entity_create_access: 'domain_path'
+    _entity_create_access: 'pathperdomain'
   options:
     _admin_route: TRUE
 
-entity.domain_path.edit_form:
-  path: '/admin/config/domain_path/{domain_path}/edit'
+entity.pathperdomain.edit_form:
+  path: '/admin/config/pathperdomain/{pathperdomain}/edit'
   defaults:
-    _entity_form: domain_path.edit
+    _entity_form: pathperdomain.edit
     _title: 'Edit Domain path'
   requirements:
-    _entity_access: 'domain_path.edit'
+    _entity_access: 'pathperdomain.edit'
   options:
     _admin_route: TRUE
 
-entity.domain_path.delete_form:
-  path: '/admin/config/domain_path/{domain_path}/delete'
+entity.pathperdomain.delete_form:
+  path: '/admin/config/pathperdomain/{pathperdomain}/delete'
   defaults:
-    _entity_form: domain_path.delete
+    _entity_form: pathperdomain.delete
     _title: 'Delete Domain path'
   requirements:
-    _entity_access: 'domain_path.delete'
+    _entity_access: 'pathperdomain.delete'
   options:
     _admin_route: TRUE
 
-entity.domain_path_settings:
-  path: '/admin/config/domain_path/domain_path_settings'
+entity.pathperdomain_settings:
+  path: '/admin/config/pathperdomain/pathperdomain_settings'
   defaults:
-    _form: '\Drupal\domain_path\Form\DomainPathSettingsForm'
+    _form: '\Drupal\pathperdomain\Form\PathPerDomainSettingsForm'
     _title: 'Domain path Settings'
   requirements:
     _permission: 'administer domain path entity'
 
 route_callbacks:
-  - 'Drupal\domain_path\Routing\DomainPathRouteSubscriber::routes'
+  - 'Drupal\pathperdomain\Routing\PathPerDomainRouteSubscriber::routes'

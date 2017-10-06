@@ -1,14 +1,14 @@
 <?php
 
-namespace Drupal\Tests\domain_path\Functional;
+namespace Drupal\Tests\pathperdomain\Functional;
 
 
 /**
  * Tests the domain path aliases saving from edit form.
  *
- * @group domain_path
+ * @group pathperdomain
  */
-class DomainPathAliasTest extends DomainPathTestBase {
+class PathPerDomainAliasTest extends PathPerDomainTestBase {
   /**
    * {@inheritdoc}
    */
@@ -19,12 +19,12 @@ class DomainPathAliasTest extends DomainPathTestBase {
   /**
    *
    */
-  public function testDomainPathAliasesFill() {
+  public function testPathPerDomainAliasesFill() {
 
     // Create alias.
     $edit = [];
     foreach ($this->domains as $domain) {
-      $edit['path[0][domain_path][' . $domain->id() . ']'] = '/' . $this->randomMachineName(8);
+      $edit['path[0][pathperdomain][' . $domain->id() . ']'] = '/' . $this->randomMachineName(8);
     }
 
     $node1 = $this->drupalCreateNode();
@@ -41,11 +41,11 @@ class DomainPathAliasTest extends DomainPathTestBase {
       $this->drupalGet('node/' . $node1->id());
       if ($domain->isDefault()) {
         $this->assertSession()
-          ->addressEquals($edit['path[0][domain_path][' . $domain->id() . ']']);
+          ->addressEquals($edit['path[0][pathperdomain][' . $domain->id() . ']']);
       }
       else {
         $this->assertSession()
-          ->addressNotEquals($edit['path[0][domain_path][' . $domain->id() . ']']);
+          ->addressNotEquals($edit['path[0][pathperdomain][' . $domain->id() . ']']);
       }
     }
   }

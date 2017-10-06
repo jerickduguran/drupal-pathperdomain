@@ -1,17 +1,17 @@
 <?php
 
-namespace Drupal\domain_path\Form;
+namespace Drupal\pathperdomain\Form;
 
 use Drupal\Core\Entity\ContentEntityDeleteForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Provides a form for deleting a domain_path entity.
+ * Provides a form for deleting a pathperdomain entity.
  *
- * @ingroup domain_path
+ * @ingroup pathperdomain
  */
-class DomainPathDeleteForm extends ContentEntityDeleteForm {
+class PathPerDomainDeleteForm extends ContentEntityDeleteForm {
   /**
    * {@inheritdoc}
    */
@@ -25,7 +25,7 @@ class DomainPathDeleteForm extends ContentEntityDeleteForm {
    * If the delete command is canceled, return to the domain path list.
    */
   public function getCancelUrl() {
-    return new Url('entity.domain_path.collection');
+    return new Url('entity.pathperdomain.collection');
   }
 
   /**
@@ -44,12 +44,12 @@ class DomainPathDeleteForm extends ContentEntityDeleteForm {
     $entity = $this->getEntity();
     $entity->delete();
 
-    $this->logger('domain_path')->notice('deleted %id.',
+    $this->logger('pathperdomain')->notice('deleted %id.',
       [
         '%id' => $this->entity->id(),
       ]);
     // Redirect to domain path list after delete.
-    $form_state->setRedirect('entity.domain_path.collection');
+    $form_state->setRedirect('entity.pathperdomain.collection');
   }
 
 }

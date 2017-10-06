@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\domain_path;
+namespace Drupal\Tests\pathperdomain;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Entity\EntityInterface;
@@ -15,7 +15,7 @@ use Drupal\taxonomy\Entity\Term;
 /**
  * Helper test class with some added functions for testing.
  */
-trait DomainPathTestHelperTrait {
+trait PathPerDomainTestHelperTrait {
   /**
    * Creates a pathauto pattern.
    *
@@ -72,7 +72,7 @@ trait DomainPathTestHelperTrait {
 
   protected function addThirdPartySettings(PathautoPatternInterface $pattern, $domains) {
     $pattern->setThirdPartySetting(
-      'domain_path',
+      'pathperdomain',
       'domains',
       $domains
     );

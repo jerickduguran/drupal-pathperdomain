@@ -1,19 +1,19 @@
 <?php
 
-namespace Drupal\Tests\domain_path\Functional;
+namespace Drupal\Tests\pathperdomain\Functional;
 
-use Drupal\Tests\domain_path\DomainPathTestHelperTrait;
+use Drupal\Tests\pathperdomain\PathPerDomainTestHelperTrait;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\taxonomy\Entity\Term;
 
 /**
  * Tests the domain path with pathauto patterns for Node entity.
  *
- * @group domain_path
+ * @group pathperdomain
  */
-class DomainPathPathautoTermTest extends DomainPathTestBase {
+class PathPerDomainPathautoTermTest extends PathPerDomainTestBase {
 
-  use DomainPathTestHelperTrait;
+  use PathPerDomainTestHelperTrait;
 
   /**
    * {@inheritdoc}
@@ -25,7 +25,7 @@ class DomainPathPathautoTermTest extends DomainPathTestBase {
   /**
    * Test for pathauto pattern generation for each domain
    */
-  public function testDomainPathPathautoTerm() {
+  public function testPathPerDomainPathautoTerm() {
     Vocabulary::create(['vid' => 'test'])->save();
 
     // create term
@@ -48,7 +48,7 @@ class DomainPathPathautoTermTest extends DomainPathTestBase {
 
       // add domains settings
       $pattern->setThirdPartySetting(
-        'domain_path',
+        'pathperdomain',
         'domains',
         [$domain->id() => $domain->id()]
       );

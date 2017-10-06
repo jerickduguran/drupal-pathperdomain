@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 use Drupal\pathauto\PathautoWidget;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -11,7 +11,7 @@ use Drupal\domain\DomainLoaderInterface;
 use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\pathauto\PathautoGeneratorInterface;
-use Drupal\domain_path\DomainPathLoaderInterface;
+use Drupal\pathperdomain\PathPerDomainLoaderInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Extends the core path widget.
  */
-class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactoryPluginInterface {
+class PathPerDomainPathautoWidget extends PathautoWidget implements ContainerFactoryPluginInterface {
 
   /**
    * @var \Drupal\domain\DomainLoaderInterface
@@ -42,7 +42,7 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
   protected $pathautoGeneratorManager;
 
   /**
-   * @var \Drupal\domain_path\DomainPathLoaderInterface
+   * @var \Drupal\pathperdomain\PathPerDomainLoaderInterface
    */
   protected $domainPathLoaderManager;
 
@@ -52,7 +52,7 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
   protected $configFactoryManager;
 
   /**
-   * DomainPathPathautoWidget constructor.
+   * PathPerDomainPathautoWidget constructor.
    *
    * @param string $plugin_id
    * @param mixed $plugin_definition
@@ -63,17 +63,17 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
    * @param \Drupal\Core\Path\AliasManagerInterface $alias_manager
    * @param \Drupal\Core\Session\AccountInterface $account_manager
    * @param \Drupal\pathauto\PathautoGeneratorInterface $pathauto_generator_manager
-   * @param \Drupal\domain_path\DomainPathLoaderInterface $domain_path_loader_manager
+   * @param \Drupal\pathperdomain\PathPerDomainLoaderInterface $pathperdomain_loader_manager
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory_manager
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, DomainLoaderInterface $domain_loader_manager, AliasManagerInterface $alias_manager, AccountInterface $account_manager, PathautoGeneratorInterface $pathauto_generator_manager, DomainPathLoaderInterface $domain_path_loader_manager, ConfigFactoryInterface $config_factory_manager) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, DomainLoaderInterface $domain_loader_manager, AliasManagerInterface $alias_manager, AccountInterface $account_manager, PathautoGeneratorInterface $pathauto_generator_manager, PathPerDomainLoaderInterface $pathperdomain_loader_manager, ConfigFactoryInterface $config_factory_manager) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->domainLoaderManager = $domain_loader_manager;
     $this->aliasManager = $alias_manager;
     $this->accountManager = $account_manager;
     $this->pathautoGeneratorManager = $pathauto_generator_manager;
-    $this->domainPathLoaderManager = $domain_path_loader_manager;
-    $this->configFactoryManager = $config_factory_manager->get('domain_path.settings');
+    $this->domainPathLoaderManager = $pathperdomain_loader_manager;
+    $this->configFactoryManager = $config_factory_manager->get('pathperdomain.settings');
   }
 
   /**
@@ -90,7 +90,7 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
       $container->get('path.alias_manager'),
       $container->get('current_user'),
       $container->get('pathauto.generator'),
-      $container->get('domain_path.loader'),
+      $container->get('pathperdomain.loader'),
       $container->get('config.factory')
     );
   }
@@ -119,9 +119,9 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
       $entity_id = $entity->id();
       $langcode = $entity->language()->getId();
       $show_delete = FALSE;
-      $domain_path_loader = $this->domainPathLoaderManager;
+      $pathperdomain_loader = $this->domainPathLoaderManager;
 
-      $element['domain_path'] = [
+      $element['pathperdomain'] = [
         '#tree' => TRUE,
         '#type' => 'details',
         '#title' => $this->t('Domain-specific paths'),
@@ -139,9 +139,9 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
           'domain_id' => $domain_id,
           'entity_type' => $entity_type,
         ];
-        if ($entity_id && $domain_paths = $domain_path_loader->loadByProperties($properties)) {
-          foreach ($domain_paths as $domain_path) {
-            $path = $domain_path->get('alias')->value;
+        if ($entity_id && $pathperdomains = $pathperdomain_loader->loadByProperties($properties)) {
+          foreach ($pathperdomains as $pathperdomain) {
+            $path = $pathperdomain->get('alias')->value;
           }
         }
 
@@ -150,14 +150,14 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
           $show_delete = TRUE;
         }
 
-        $element['domain_path']['domain_path_delete'] = [
+        $element['pathperdomain']['pathperdomain_delete'] = [
           '#type' => 'checkbox',
           '#title' => $this->t('Delete domain-specific aliases'),
           '#default_value' => FALSE,
           '#access' => $show_delete,
         ];
 
-        $element['domain_path'][$domain_id] = [
+        $element['pathperdomain'][$domain_id] = [
           '#type' => 'textfield',
           '#title' => Html::escape(rtrim($domain->getPath(), '/')),
           '#default_value' => $path ? $path : $default,
@@ -194,22 +194,22 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
     $entity = $form_state->getFormObject()->getEntity();
     $entity_id = $entity->id();
     $path_values = $form_state->getValue('path');
-    $domain_path_values = isset($path_values[0]['domain_path']) ? $path_values[0]['domain_path'] : [];
-    if (!empty($domain_path_values['domain_path_delete'])) {
+    $pathperdomain_values = isset($path_values[0]['pathperdomain']) ? $path_values[0]['pathperdomain'] : [];
+    if (!empty($pathperdomain_values['pathperdomain_delete'])) {
       return;
     }
-    unset($domain_path_values['domain_path_delete']);
+    unset($pathperdomain_values['pathperdomain_delete']);
     $alias = isset($path_values[0]['alias']) ? $path_values[0]['alias'] : NULL;
-    $domain_path_loader = \Drupal::service('domain_path.loader');
+    $pathperdomain_loader = \Drupal::service('pathperdomain.loader');
     $domains = \Drupal::service('domain.loader')->loadMultipleSorted();
     // Make sure we don't duplicate anything.
-    foreach ($domain_path_values as $domain_id => $path) {
+    foreach ($pathperdomain_values as $domain_id => $path) {
       $key = ($domain_id == -1) ? 0 : $domain_id;
       if (!empty($path) && $path == $alias) {
-        $form_state->setError($element['domain_path'][$key], t('Domain path "%path" matches the default path alias. You may leave the element blank.', ['%path' => $path]));
+        $form_state->setError($element['pathperdomain'][$key], t('Domain path "%path" matches the default path alias. You may leave the element blank.', ['%path' => $path]));
       }
       elseif (!empty($path)) {
-        self::validateDomainPathValue($form_state, $domain_path_loader, $element, $domains, $domain_id, $entity_id, $path, $key);
+        self::validatePathPerDomainValue($form_state, $pathperdomain_loader, $element, $domains, $domain_id, $entity_id, $path, $key);
       }
     }
   }
@@ -218,7 +218,7 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
    * Validate handler for domain path value.
    *
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   * @param \Drupal\domain_path\DomainPathLoaderInterface $domain_path_loader
+   * @param \Drupal\pathperdomain\PathPerDomainLoaderInterface $pathperdomain_loader
    * @param $element
    * @param $domains
    * @param $domain_id
@@ -226,19 +226,19 @@ class DomainPathPathautoWidget extends PathautoWidget implements ContainerFactor
    * @param $path
    * @param $key
    */
-  public static function validateDomainPathValue(FormStateInterface $form_state, DomainPathLoaderInterface $domain_path_loader, $element, $domains, $domain_id, $entity_id, $path, $key) {
+  public static function validatePathPerDomainValue(FormStateInterface $form_state, PathPerDomainLoaderInterface $pathperdomain_loader, $element, $domains, $domain_id, $entity_id, $path, $key) {
     $path_value = rtrim(trim($path), " \\/");
     if ($path_value && $path_value[0] !== '/') {
-      $form_state->setError($element['domain_path'][$key], t('Domain path "%path" needs to start with a slash.', ['%path' => $path]));
+      $form_state->setError($element['pathperdomain'][$key], t('Domain path "%path" needs to start with a slash.', ['%path' => $path]));
     }
-    if (!empty($entity_id) && $domain_path_entity_data = $domain_path_loader->loadByProperties(['alias' => $path])) {
-      foreach ($domain_path_entity_data as $domain_path_entity) {
-        $check_entity_id = $domain_path_entity->get('entity_id')->target_id;
-        $check_domain_id = $domain_path_entity->get('domain_id')->target_id;
+    if (!empty($entity_id) && $pathperdomain_entity_data = $pathperdomain_loader->loadByProperties(['alias' => $path])) {
+      foreach ($pathperdomain_entity_data as $pathperdomain_entity) {
+        $check_entity_id = $pathperdomain_entity->get('entity_id')->target_id;
+        $check_domain_id = $pathperdomain_entity->get('domain_id')->target_id;
         if ($check_entity_id != $entity_id
           && $check_domain_id == $key) {
-          $domain_path = $domains[$domain_id]->getPath();
-          $form_state->setError($element['domain_path'][$key], t('Domain path %path matches an existing domain path alias for %domain_path.', ['%path' => $path, '%domain_path' => $domain_path]));
+          $pathperdomain = $domains[$domain_id]->getPath();
+          $form_state->setError($element['pathperdomain'][$key], t('Domain path %path matches an existing domain path alias for %pathperdomain.', ['%path' => $path, '%pathperdomain' => $pathperdomain]));
         }
       }
     }

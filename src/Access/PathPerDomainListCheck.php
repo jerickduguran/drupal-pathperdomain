@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\domain_path\Access;
+namespace Drupal\pathperdomain\Access;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
@@ -8,7 +8,7 @@ use Drupal\Core\Session\AccountInterface;
 /**
  * Custom access control handler for the domain path overview page.
  */
-class DomainPathListCheck {
+class PathPerDomainListCheck {
 
   /**
    * Handles route permissions on the domain path list page.
@@ -18,7 +18,7 @@ class DomainPathListCheck {
    *
    * @return \Drupal\Core\Access\AccessResult
    */
-  public static function viewDomainPathList(AccountInterface $account) {
+  public static function viewPathPerDomainList(AccountInterface $account) {
     if ($account->hasPermission('administer domain path entity') || $account->hasPermission('view domain path list')) {
       return AccessResult::allowed();
     }

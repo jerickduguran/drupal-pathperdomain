@@ -1,18 +1,18 @@
 <?php
 
-namespace Drupal\domain_path\PathProcessor;
+namespace Drupal\pathperdomain\PathProcessor;
 
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class DomainPathProcessor implements InboundPathProcessorInterface {
+class PathPerDomainProcessor implements InboundPathProcessorInterface {
 
   /**
    * {@inheritDoc}
    */
   public function processInbound($path, Request $request) {
     $domainCurrent = \Drupal::service('domain.negotiator')->getActiveDomain();
-    $domainPathLoader = \Drupal::service('domain_path.loader');
+    $domainPathLoader = \Drupal::service('pathperdomain.loader');
     $languageManager = \Drupal::languageManager();
 
     $properties = [

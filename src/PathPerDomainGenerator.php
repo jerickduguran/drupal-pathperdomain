@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 use Drupal\pathauto\PathautoGenerator;
 use Drupal\pathauto\PathautoGeneratorInterface;
@@ -13,10 +13,10 @@ use Drupal\pathauto\PathautoState;
 use Drupal\Component\Utility\Unicode;
 
 /**
- * Class DomainPathGenerator
- * @package Drupal\domain_path
+ * Class PathPerDomainGenerator
+ * @package Drupal\pathperdomain
  */
-class DomainPathGenerator extends PathautoGenerator {
+class PathPerDomainGenerator extends PathautoGenerator {
 
   /**
    * @var
@@ -40,14 +40,14 @@ class DomainPathGenerator extends PathautoGenerator {
   }
 
   /**
-   * Source for domain_path for url_alias table
+   * Source for pathperdomain for url_alias table
    *
    * @param $entity
    * @return string
    */
   protected function getSource($entity) {
     if (!empty($this->domain_id) && $entity) {
-      return '/domain_path/' . $this->domain_id . '/' . $entity->getEntityTypeId() . '/' . $entity->id();
+      return '/pathperdomain/' . $this->domain_id . '/' . $entity->getEntityTypeId() . '/' . $entity->id();
     }
   }
 
@@ -60,7 +60,7 @@ class DomainPathGenerator extends PathautoGenerator {
         ->condition('type', array_keys(\Drupal::service('plugin.manager.alias_type')
           ->getPluginDefinitionByType($this->tokenEntityMapper->getTokenTypeForEntityType($entity_type_id))))
         ->condition('status', 1)
-        ->condition('third_party_settings.domain_path.domains.' . $this->domain_id, $this->domain_id)
+        ->condition('third_party_settings.pathperdomain.domains.' . $this->domain_id, $this->domain_id)
         ->sort('weight')
         ->execute();
 

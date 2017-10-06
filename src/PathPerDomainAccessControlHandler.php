@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityAccessControlHandler;
@@ -12,7 +12,7 @@ use Drupal\Core\Session\AccountInterface;
  *
  * @see \Drupal\comment\Entity\Comment.
  */
-class DomainPathAccessControlHandler extends EntityAccessControlHandler {
+class PathPerDomainAccessControlHandler extends EntityAccessControlHandler {
 
   /**
    * {@inheritdoc}

@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 use Drupal\Core\Access\AccessResult;
 
 /**
  * Custom access control handler for the domain path page.
  */
-class DomainPathAccess {
+class PathPerDomainAccess {
 
   /**
    * Check if current path has alias

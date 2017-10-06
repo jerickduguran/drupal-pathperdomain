@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains \Drupal\domain_path\Plugin\Derivative\DomainPathLocalTasks.
+ * Contains \Drupal\pathperdomain\Plugin\Derivative\PathPerDomainLocalTasks.
  */
 
-namespace Drupal\domain_path\Plugin\Derivative;
+namespace Drupal\pathperdomain\Plugin\Derivative;
 
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
@@ -17,7 +17,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 /**
  * Defines dynamic domain path view local tasks.
  */
-class DomainPathLocalTasks extends DeriverBase implements ContainerDeriverInterface {
+class PathPerDomainLocalTasks extends DeriverBase implements ContainerDeriverInterface {
 
   use StringTranslationTrait;
 
@@ -29,7 +29,7 @@ class DomainPathLocalTasks extends DeriverBase implements ContainerDeriverInterf
   protected $localTaskManager;
 
   /**
-   * Creates an DomainPathLocalTasks object.
+   * Creates an PathPerDomainLocalTasks object.
    *
    * @param \Drupal\Core\Menu\LocalTaskManagerInterface $local_task_manager
    *   The entity manager.
@@ -57,8 +57,8 @@ class DomainPathLocalTasks extends DeriverBase implements ContainerDeriverInterf
   public function getDerivativeDefinitions($base_plugin_definition) {
     $this->derivatives = [];
 
-    $domain_path_helper = \Drupal::service('domain_path.helper');
-    $enabled_entity_types = $domain_path_helper->getConfiguredEntityTypes();
+    $pathperdomain_helper = \Drupal::service('pathperdomain.helper');
+    $enabled_entity_types = $pathperdomain_helper->getConfiguredEntityTypes();
 
     if ($enabled_entity_types) {
       foreach ($enabled_entity_types as $entity_type) {
@@ -66,17 +66,17 @@ class DomainPathLocalTasks extends DeriverBase implements ContainerDeriverInterf
         if (!empty($tasks)) {
           $tasks = reset($tasks);
 
-          $this->derivatives["domain_path.view.$entity_type"]['title'] = t('View');
-          $this->derivatives["domain_path.view.$entity_type"]['route_name'] = "domain_path.view.$entity_type";
-          $this->derivatives["domain_path.view.$entity_type"]['base_route'] = "domain_path.view.$entity_type";
+          $this->derivatives["pathperdomain.view.$entity_type"]['title'] = t('View');
+          $this->derivatives["pathperdomain.view.$entity_type"]['route_name'] = "pathperdomain.view.$entity_type";
+          $this->derivatives["pathperdomain.view.$entity_type"]['base_route'] = "pathperdomain.view.$entity_type";
 
           foreach ($tasks as $task_id => $task) {
             // don't include View tab with standart alias
             if ($task_id !== "entity.$entity_type.canonical") {
-              $this->derivatives["domain_path.view.$task_id"]['title'] = $task->getTitle();
-              $this->derivatives["domain_path.view.$task_id"]['weight'] = $task->getWeight();
-              $this->derivatives["domain_path.view.$task_id"]['route_name'] = $task->getRouteName();
-              $this->derivatives["domain_path.view.$task_id"]['base_route'] = "domain_path.view.$entity_type";
+              $this->derivatives["pathperdomain.view.$task_id"]['title'] = $task->getTitle();
+              $this->derivatives["pathperdomain.view.$task_id"]['weight'] = $task->getWeight();
+              $this->derivatives["pathperdomain.view.$task_id"]['route_name'] = $task->getRouteName();
+              $this->derivatives["pathperdomain.view.$task_id"]['base_route'] = "pathperdomain.view.$entity_type";
             }
           }
         }

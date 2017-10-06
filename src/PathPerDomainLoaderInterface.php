@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 /**
  * Supplies loader methods for common domain path requests.
  */
-interface DomainPathLoaderInterface {
+interface PathPerDomainLoaderInterface {
 
   /**
    * Loads a single domain paths.
@@ -15,7 +15,7 @@ interface DomainPathLoaderInterface {
    * @param bool $reset
    *   Indicates that the entity cache should be reset.
    *
-   * @return \Drupal\domain_path\DomainPathInterface|null
+   * @return \Drupal\pathperdomain\PathPerDomainInterface|null
    *   A domain path record or NULL.
    */
   public function load($id, $reset = FALSE);
@@ -26,7 +26,7 @@ interface DomainPathLoaderInterface {
    * @param array $properties
    *   A domain properties to load.
    *
-   * @return \Drupal\domain_path\DomainPathInterface|null
+   * @return \Drupal\pathperdomain\PathPerDomainInterface|null
    *   A domain path record or NULL.
    */
   public function loadByProperties($properties);
@@ -39,7 +39,7 @@ interface DomainPathLoaderInterface {
    * @param bool $reset
    *   Indicates that the entity cache should be reset.
    *
-   * @return \Drupal\domain_path\DomainPathInterface[]
+   * @return \Drupal\pathperdomain\PathPerDomainInterface[]
    *   An array of domain path records.
    */
   public function loadMultiple(array $ids = NULL, $reset = FALSE);

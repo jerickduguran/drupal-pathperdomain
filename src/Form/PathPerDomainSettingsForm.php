@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\domain_path\Form;
+namespace Drupal\pathperdomain\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -10,11 +10,11 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class DomainPathSettingsForm.
- * @package Drupal\domain_path\Form
- * @ingroup domain_path
+ * Class PathPerDomainSettingsForm.
+ * @package Drupal\pathperdomain\Form
+ * @ingroup pathperdomain
  */
-class DomainPathSettingsForm extends ConfigFormBase {
+class PathPerDomainSettingsForm extends ConfigFormBase {
 
   /**
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -46,21 +46,21 @@ class DomainPathSettingsForm extends ConfigFormBase {
    *   The unique string identifying the form.
    */
   public function getFormId() {
-    return 'domain_path_settings';
+    return 'pathperdomain_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['domain_path.settings'];
+    return ['pathperdomain.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('domain_path.settings');
+    $config = $this->config('pathperdomain.settings');
     $enabled_entity_types = $config->get('entity_types');
 
     $form['entity_types'] = [
@@ -89,7 +89,7 @@ class DomainPathSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('domain_path.settings')
+    $this->config('pathperdomain.settings')
       ->set('entity_types', $form_state->getValue('entity_types'))
       ->save();
 

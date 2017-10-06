@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\domain_path;
+namespace Drupal\pathperdomain;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Language\Language;
-//use Drupal\domain_path\Exception\DomainPathRedirectLoopException;
+//use Drupal\pathperdomain\Exception\PathPerDomainRedirectLoopException;
 
-class DomainPathRepository {
+class PathPerDomainRepository {
 
   /**
    * @var \Drupal\Core\Entity\EntityManagerInterface
@@ -56,14 +56,14 @@ class DomainPathRepository {
    * @param $language
    *   The language for which is the redirect.
    *
-   * @return \Drupal\domain_path\Entity\DomainPath
+   * @return \Drupal\pathperdomain\Entity\PathPerDomain
    *   The matched redirect entity.
    *
-   * @throws \Drupal\domain_path\Exception\DomainPathRedirectLoopException
+   * @throws \Drupal\pathperdomain\Exception\PathPerDomainRedirectLoopException
    */
   public function findMatchingRedirect($domain_id, $entity_type, $entity_id, $language = Language::LANGCODE_NOT_SPECIFIED) {
     // Load redirects by hash. A direct query is used to improve performance.
-    $id = $this->connection->query('SELECT id FROM {domain_path} WHERE domain_id = :domain_id AND entity_type = :entity_type AND entity_id = :entity_id AND language = :language',
+    $id = $this->connection->query('SELECT id FROM {pathperdomain} WHERE domain_id = :domain_id AND entity_type = :entity_type AND entity_id = :entity_id AND language = :language',
       [
         ':domain_id' => $domain_id,
         ':entity_type' => $entity_type,
@@ -73,9 +73,9 @@ class DomainPathRepository {
     )->fetchField();
 
     if (!empty($id)) {
-      $domain_path = $this->load($id);
+      $pathperdomain = $this->load($id);
 
-      return $domain_path;
+      return $pathperdomain;
     }
 
     return NULL;
@@ -89,8 +89,8 @@ class DomainPathRepository {
    *
    * @return \Drupal\redirect\Entity\Redirect
    */
-  public function load($domain_path_id) {
-    return $this->manager->getStorage('domain_path')->load($domain_path_id);
+  public function load($pathperdomain_id) {
+    return $this->manager->getStorage('pathperdomain')->load($pathperdomain_id);
   }
 
   /**
@@ -103,6 +103,6 @@ class DomainPathRepository {
    *   List of redirect entities.
    */
   public function loadMultiple(array $redirect_ids = NULL) {
-    return $this->manager->getStorage('domain_path')->loadMultiple($redirect_ids);
+    return $this->manager->getStorage('pathperdomain')->loadMultiple($redirect_ids);
   }
 }
