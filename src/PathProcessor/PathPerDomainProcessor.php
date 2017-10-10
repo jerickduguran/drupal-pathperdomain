@@ -5,7 +5,7 @@ namespace Drupal\pathperdomain\PathProcessor;
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
-use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Render\BubbleableMetadata; 
 
 class PathPerDomainProcessor implements InboundPathProcessorInterface, OutboundPathProcessorInterface  {
 
@@ -42,9 +42,15 @@ class PathPerDomainProcessor implements InboundPathProcessorInterface, OutboundP
 		$targetPath			= '/pathperdomain/' . $domainCurrent->id() .$path; 
 		$domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId());
 		
-		if(!empty($domainPathEntities)){ 
+		if(!empty($domainPathEntities)){  
 		    return $domainPathEntities['alias'];
 		}  
+		
+		// Cached URLs that have been processed by this outbound path 
+		if ($bubbleable_metadata) {
+		   $bubbleable_metadata 
+		   ->addCacheContexts(['url.query_args:pathperdomain']);
+		 }
 	  }   
 	  
 	  return $path;
