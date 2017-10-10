@@ -2,8 +2,8 @@ services:
   pathperdomain.path_processor:
     class: Drupal\pathperdomain\PathProcessor\PathPerDomainProcessor
     tags:
-      - { name: path_processor_inbound, priority: 250 }
-
+      - { name: path_processor_inbound, priority: 999 }
+      - { name: path_processor_outbound, priority: 10} 
   pathperdomain.loader:
     class: Drupal\pathperdomain\PathPerDomainLoader
     tags:
