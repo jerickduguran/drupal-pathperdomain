@@ -32,26 +32,23 @@ class PathPerDomainProcessor implements InboundPathProcessorInterface, OutboundP
     return $domainPathEntity->getSource();
   } 
   
-  public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL){ 
-	  
-	  if(isset($options['absolute']) && false == $options['absolute']){   
-		$domainCurrent    = \Drupal::service('domain.negotiator')->getActiveDomain();
-		$pathAliasHelper  = \Drupal::service('pathauto.alias_storage_helper');
-		$languageManager  = \Drupal::languageManager();
- 
-		$targetPath			= '/pathperdomain/' . $domainCurrent->id() .$path; 
-		$domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId());
-		
-		if(!empty($domainPathEntities)){  
-		    return $domainPathEntities['alias'];
-		}  
-		
-		// Cached URLs that have been processed by this outbound path 
-		if ($bubbleable_metadata) {
-		   $bubbleable_metadata 
-		   ->addCacheContexts(['url.query_args:pathperdomain']);
-		 }
-	  }   
+  public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL){    
+	  $domainCurrent    = \Drupal::service('domain.negotiator')->getActiveDomain();
+	  $pathAliasHelper  = \Drupal::service('pathauto.alias_storage_helper');
+	  $languageManager  = \Drupal::languageManager();
+
+	  $targetPath			= '/pathperdomain/' . $domainCurrent->id() .$path; 
+	  $domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId());
+
+	  if(!empty($domainPathEntities)){  
+		  return $domainPathEntities['alias'];
+	  }  
+
+	  // Cached URLs that have been processed by this outbound path 
+	  if ($bubbleable_metadata) {
+		 $bubbleable_metadata 
+		 ->addCacheContexts(['url.query_args:pathperdomain']);
+	   } 
 	  
 	  return $path;
   }
