@@ -58,7 +58,7 @@ class PathPerDomainProcessor implements InboundPathProcessorInterface, OutboundP
 		} 
 	}   	
 	 
-	 
+	$targetPath			= '/pathperdomain/' . $domainCurrent->id().$path;   
 	$domainPathEntities = $this->getDomainPathEntities($targetPath);
 		
 	if(!empty($domainPathEntities)){  
