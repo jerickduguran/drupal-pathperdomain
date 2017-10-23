@@ -32,24 +32,49 @@ class PathPerDomainProcessor implements InboundPathProcessorInterface, OutboundP
     return $domainPathEntity->getSource();
   } 
   
-  public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL){    
-	  $domainCurrent    = \Drupal::service('domain.negotiator')->getActiveDomain();
-	  $pathAliasHelper  = \Drupal::service('pathauto.alias_storage_helper');
-	  $languageManager  = \Drupal::languageManager();
+  public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL){ 
+	    
+	$domainCurrent    = \Drupal::service('domain.negotiator')->getActiveDomain();
+	$pathAliasHelper  = \Drupal::service('pathauto.alias_storage_helper');
+	$languageManager  = \Drupal::languageManager(); 
+	
+	$node_path = \Drupal::service("path.alias_manager")->getPathByAlias($path);
+	$args      = explode('/', $node_path); 
+	$entity    = \Drupal::entityTypeManager()->getStorage("node")->load(end($args));   
 
-	  $targetPath			= '/pathperdomain/' . $domainCurrent->id() .$path; 
-	  $domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId());
+	if ($entity && $target_id = domain_source_get($entity)){
+		$source = \Drupal::service("domain.loader")->load($target_id);  
+		if($source->id() != $domainCurrent->id() && $domainCurrent->isDefault()){   
+			$options["base_url"] = trim($source->getUrl(),"/");  
+			//try using node
+			$targetPath			= '/pathperdomain/'.$source->id().'/node/' . $entity->id();  
+			$domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId()); 
+			if(!empty($domainPathEntities)){   
+				return $domainPathEntities['alias'];
+			}   
+			//try using path 
+			$targetPath			= '/pathperdomain/' . $source->id().$path;  
+			$domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId()); 
+			if(!empty($domainPathEntities)){  
+				return $domainPathEntities['alias'];
+			}  
+		} 
+	}   	
+	 
+	
+	$targetPath			= '/pathperdomain/' . $domainCurrent->id() .$path; 
+	$domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId()); 
+		
+	if(!empty($domainPathEntities)){  
+		return $domainPathEntities['alias'];
+	}  
 
-	  if(!empty($domainPathEntities)){  
-		  return $domainPathEntities['alias'];
-	  }  
-
-	  // Cached URLs that have been processed by this outbound path 
-	  if ($bubbleable_metadata) {
-		 $bubbleable_metadata 
-		 ->addCacheContexts(['url.query_args:pathperdomain']);
-	   } 
-	  
-	  return $path;
+	// Cached URLs that have been processed by this outbound path 
+	if ($bubbleable_metadata) {
+	   $bubbleable_metadata 
+	   ->addCacheContexts(['url.query_args:pathperdomain']);
+	} 
+	 
+	return $path;
   }
 }
