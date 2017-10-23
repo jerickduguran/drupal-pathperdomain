@@ -33,12 +33,11 @@ class PathPerDomainProcessor implements InboundPathProcessorInterface, OutboundP
   } 
   
   public function processOutbound($path, &$options = [], Request $request = NULL, BubbleableMetadata $bubbleable_metadata = NULL){ 
-	  
-	  if(isset($options['absolute']) && false == $options['absolute']){   
+	     
 		$domainCurrent    = \Drupal::service('domain.negotiator')->getActiveDomain();
 		$pathAliasHelper  = \Drupal::service('pathauto.alias_storage_helper');
 		$languageManager  = \Drupal::languageManager();
- 
+
 		$targetPath			= '/pathperdomain/' . $domainCurrent->id() .$path; 
 		$domainPathEntities = $pathAliasHelper->loadBySource($targetPath,$languageManager->getCurrentLanguage()->getId());
 		
@@ -50,8 +49,7 @@ class PathPerDomainProcessor implements InboundPathProcessorInterface, OutboundP
 		if ($bubbleable_metadata) {
 		   $bubbleable_metadata 
 		   ->addCacheContexts(['url.query_args:pathperdomain']);
-		 }
-	  }   
+		 } 
 	  
 	  return $path;
   }
