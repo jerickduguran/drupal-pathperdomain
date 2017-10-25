@@ -11,3 +11,6 @@ delete domain path entity:
 administer domain path entity:
   title: 'Administer Domain path entity'
   restrict access: TRUE
+apply administration domain restriction:
+  title: 'Apply Administration Domain Restriction'
+  description: 'Control which roles are restricted per assigned domain.'

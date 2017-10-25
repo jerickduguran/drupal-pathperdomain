@@ -7,7 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\pathperdomain\Plugin\Menu\ViewTab;
+use Drupal\pathperdomain\Plugin\Menu\ViewTab; 
 
 /**
  * Implements hook_entity_type_alter().
@@ -248,3 +248,35 @@ function pathperdomain_menu_local_tasks_alter(&$local_tasks) {
     }
   }
 }
+
+
+
+function pathperdomain_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id){
+	$moduleHandler = \Drupal::service('module_handler');
+	if ($moduleHandler->moduleExists('mosaic')){ 
+		if("mosaic.admin.login" == \Drupal::routeMatch()->getRouteName()){   
+			$form['#validate'][] = 'pathperdomain_admin_form_login_validate';
+
+		}
+	}
+}
+
+function pathperdomain_admin_form_login_validate($form, FormStateInterface &$form_state) { 
+	
+  if ($form_state->getValue('admin_login_form',false) == 'is_admin_login') { 
+	if($form_state->get('uid')){
+		$uid				= $form_state->get('uid'); 
+		$user				= \Drupal\user\Entity\User::load($uid);   
+		$applyFilter		= $user->hasPermission('apply administration domain restriction');  
+		
+		if($user && $applyFilter){ 
+			 $domainElementManager = \Drupal::service("domain.element_manager"); 
+			 $domainCurrent		  = \Drupal::service('domain.negotiator')->getActiveDomain(); 
+			 $user_domains = $domainElementManager->getFieldValues($user, DOMAIN_ADMIN_FIELD); 
+			 if(!isset($user_domains[$domainCurrent->id()])){  
+				$form_state->setErrorByName('name',t('You are not allowed to login on this domain.'));
+			 } 
+		} 
+	}
+  }     
+} 
