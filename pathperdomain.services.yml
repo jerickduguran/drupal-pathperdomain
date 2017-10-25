@@ -17,7 +17,7 @@ services:
     class: Drupal\pathperdomain\EventSubscriber\PathPerDomainRedirect
     arguments: ['@domain.negotiator', '@pathperdomain.repository', '@language_manager', '@config.factory', '@path.alias_manager', '@module_handler', '@entity.manager', '@redirect.checker', '@router.request_context', '@path_processor_manager']
     tags:
-      - { name: event_subscriber }
+      - { name: event_subscriber } 
   pathperdomain.generator:
     class: Drupal\pathperdomain\PathPerDomainGenerator
     arguments: ['@config.factory', '@module_handler', '@token', '@pathauto.alias_cleaner', '@pathauto.alias_storage_helper', '@pathauto.alias_uniquifier', '@pathauto.verbose_messenger', '@string_translation', '@token.entity_mapper', '@entity_type.manager']
